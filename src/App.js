@@ -1,9 +1,10 @@
 import React from 'react';
 import './App.css'
 import {useDispatch, useSelector} from "react-redux";
-import {fetchUsersThunk} from "./store/cash-reducer";
+import {ADD_CASH_ASYNC, addCashAsyncAction, decrementAction, fetchUsersThunk} from "./store/cash-reducer";
 import {addCustomerAction, RemoveCustomerAction} from "./store/customers-reducer";
 import {addManyCustomersThunk} from "./API/customer";
+import {generatorFunction} from "./Saga/test";
 
 const App = () => {
     const users = useSelector(state => state.Cash.users)
@@ -13,8 +14,23 @@ const App = () => {
 
     // А чтобы получить состояние нужно возпользоваться хуком useSelector
 
+    // const iter = generatorFunction() - Здесь изпользуется функция генератор и выводит в
+    // в каждый новый раз новое значение и преждевременно отключая себя
+    // console.log(iter.next())
+    // console.log(iter.next())
+    // console.log(iter.next())
+    // console.log(iter.next())
+    // console.log(iter.next())
+    // console.log(iter.next())
     const onAddCustomerHandle = (name) => {
         dispatch(addCustomerAction(name))
+    }
+
+    const onCallSagaHandle =  e => {
+        dispatch(addCashAsyncAction())
+    }
+    const onCallSagaDecrementHandle =  e => {
+        dispatch(decrementAction())
     }
     const onRemoveCustomerHandle = (id) => {
         dispatch(RemoveCustomerAction(id))
@@ -46,6 +62,8 @@ const App = () => {
             <button onClick={() => onGetCash(Number(prompt()))}>Взять деньги</button>
             <button onClick={() => onAddCustomerHandle(prompt())}>Добавить клиента</button>
             <button onClick={onAddManyCustomersHandle}>Получить клиентов из базы</button>
+            <button onClick={onCallSagaHandle}>Вызвать Redux-Saga</button>
+            <button onClick={onCallSagaDecrementHandle}>Взять кеш с помощью Saga</button>
             <div>{users.map(user => {
                 return <div key={user.id}>
                     {user?.id}
