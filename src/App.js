@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css'
 import {useDispatch, useSelector} from "react-redux";
 import {ADD_CASH_ASYNC, addCashAsyncAction, decrementAction, fetchUsersThunk} from "./store/cash-reducer";
-import {addCustomerAction, RemoveCustomerAction} from "./store/customers-reducer";
+import {addCustomerAction, fetchManyCustomersAction, RemoveCustomerAction} from "./store/customers-reducer";
 import {addManyCustomersThunk} from "./API/customer";
 import {generatorFunction} from "./Saga/test";
 
@@ -39,6 +39,9 @@ const App = () => {
     const onAddManyCustomersHandle = () => {
         dispatch(addManyCustomersThunk())
     }
+    const onFetchManyCustomersHandle = () => {
+        dispatch(fetchManyCustomersAction())
+    }
     function onAddCash(cash) {
         dispatch({type: "ADD_CASH", payload: cash})
     }
@@ -63,19 +66,23 @@ const App = () => {
             <button onClick={() => onAddCustomerHandle(prompt())}>Добавить клиента</button>
             <button onClick={onAddManyCustomersHandle}>Получить клиентов из базы</button>
             <button onClick={onCallSagaHandle}>Вызвать Redux-Saga</button>
+            <button onClick={onFetchManyCustomersHandle}
+            >
+                Добавить пользователей с помощью Redux-Saga
+            </button>
             <button onClick={onCallSagaDecrementHandle}>Взять кеш с помощью Saga</button>
-            <div>{users.map(user => {
-                return <div key={user.id}>
+            <div>{users?.map(user => {
+                return <div key={user?.id}>
                     {user?.id}
                     <div>{user?.name}</div>
                 </div>
             })}</div>
             {customers.length > 0 ? <div>{customers.map(customer => {
                 return <div
-                    key={customer.id}
+                    key={customer?.id}
                 >
                     {customer?.name}
-                    <button onClick={() => onRemoveCustomerHandle(customer.id)}
+                    <button onClick={() => onRemoveCustomerHandle(customer?.id)}
                     >
                         Удалить клиента
                     </button>

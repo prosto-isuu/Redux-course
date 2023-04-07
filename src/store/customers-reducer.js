@@ -1,4 +1,5 @@
 const ADD_CUSTOMER = 'ADD_CUSTOMER'
+export const FETCH_USERS = 'FETCH_USERS'
 const REMOVE_CUSTOMER = 'REMOVE_CUSTOMER'
 const ADD_MANY_CUSTOMERS = 'ADD_MANY_CUSTOMERS'
 
@@ -32,4 +33,5 @@ export const customerReducer = (state = defaultState, action) => {
 export const addCustomerAction = (name) => ({type:ADD_CUSTOMER, payload:{id:Date.now(), name}})
 export const RemoveCustomerAction = (id) => ({type:REMOVE_CUSTOMER, id})
 export const addManyCustomersAction = (payload) => ({type:ADD_MANY_CUSTOMERS, payload}) // - Action creator - это функция которая
+export const fetchManyCustomersAction = (payload) => ({type:FETCH_USERS}) // - Action creator - это функция которая
 // возвращает обьект у которого должен быть как минимум поле type

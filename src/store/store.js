@@ -4,7 +4,8 @@ import {customerReducer} from "./customers-reducer";
 import {composeWithDevTools} from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import createSagaMiddleware from 'redux-saga';
-import {countWatcher} from "../Saga/CountSaga"; // - Midleware - это некий слой который может
+import {countWatcher} from "../Saga/CountSaga";
+import {rootWatcher} from "../Saga/Saga"; // - Midleware - это некий слой который может
 // задиспачить функцию
 
 const sagaMiddleware = createSagaMiddleware();
@@ -28,5 +29,5 @@ export const store = createStore(
 // 1 - getState получить состояние
 // 2 - dispatch изменить состояние
 // 3 - subscribe подписаться на изменеия в состоянии
-sagaMiddleware.run(countWatcher) // -здесь я вызывваю сагу
+sagaMiddleware.run(rootWatcher) // -здесь я вызывваю сагу
 
